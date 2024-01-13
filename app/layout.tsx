@@ -1,7 +1,12 @@
-import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-
+import "./globals.css";
+import Navbar from "@/app/navbar";
+import { Theme, Container } from "@radix-ui/themes";
+import "@radix-ui/themes/styles.css";
+import AuthProvider from "./auth/provider";
+import QueryClientProvider from "./queryClientProvider";
+import { Toaster } from "react-hot-toast";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -11,13 +16,25 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+
 }: {
   children: React.ReactNode;
+
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning={true}>
       <body className={inter.className}>
-        <main>{children}</main>
+        <QueryClientProvider>
+          <AuthProvider>
+            <Toaster/>
+            <Theme accentColor="green" appearance="light">
+              <Navbar />
+              <main className="p-5">
+                <Container>{children}</Container>
+              </main>
+            </Theme>
+          </AuthProvider>
+        </QueryClientProvider>
       </body>
     </html>
   );
