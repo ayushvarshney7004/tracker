@@ -37,7 +37,7 @@ const IssueFiter = () => {
       <Select.Trigger placeholder="Filter(Status)" />
       <Select.Content>
         {statusUse.map((status) => (
-          <Select.Item value={status.value || ""}>{status.label}</Select.Item>
+          <Select.Item value={status.value || ""} key={status.value}>{status.label}</Select.Item>
         ))}
       </Select.Content>
     </Select.Root>
