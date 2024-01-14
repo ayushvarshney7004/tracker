@@ -59,11 +59,11 @@ const IssueTable = ({ searchParams, issues }: Props) => {
                 {issue.title}
               </Link>
               <div className="block md:hidden">
-                <IssueStatusBadge status={issue.status} />
+                <IssueStatusBadge status={issue.status as keyof typeof Status} />
               </div>
             </Table.Cell>
             <Table.Cell className="hidden md:table-cell">
-              <IssueStatusBadge status={issue.status} />
+              <IssueStatusBadge status={issue.status as keyof typeof Status} />
             </Table.Cell>
             <Table.Cell className="hidden md:table-cell">
               {issue.createdAt.toDateString()}
