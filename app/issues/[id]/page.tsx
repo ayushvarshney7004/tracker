@@ -20,11 +20,10 @@ const fetchUser = cache((issueId: string) =>
 
 const IssueDetailPage = async ({ params }: Props) => {
   const session = await getServerSession(authOptions);
-  
 
-  const issue = await fetchUser((params.id));
-
+  const issue = await fetchUser(params.id);
   if (!issue) notFound();
+
 
   return (
     <Grid columns={{ initial: "1", sm: "5" }} gap="5">
