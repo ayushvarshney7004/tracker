@@ -4,10 +4,16 @@ import { Table } from "@radix-ui/themes";
 import Link from "next/link";
 import React from "react";
 import NextLink from "next/link";
-import { Del, Issue, Status } from "@prisma/client";
+import { Issue } from "@prisma/client"; // Import the Status type
+
+export const Status = {
+  OPEN: 'OPEN',
+  IN_PROGRESS: 'IN_PROGRESS',
+  CLOSED: 'CLOSED',
+} as const;
 
 export interface IssueQuery {
-  status: Status;
+  status: keyof typeof Status;
   orderBy: keyof Issue;
   page: string;
 }
@@ -15,12 +21,12 @@ export interface IssueQuery {
 interface Props {
   searchParams: IssueQuery;
   issues: Issue[];
-  delIssues: Del[];
 }
 
-const IssueTable = ({ searchParams, issues, delIssues }: Props) => {
+const IssueTable = ({ searchParams, issues }: Props) => {
   return (
     <Table.Root variant="surface">
+      {/* ... (unchanged code) */}
       <Table.Header>
         <Table.Row>
           {columns.map((column) => (
@@ -49,13 +55,15 @@ const IssueTable = ({ searchParams, issues, delIssues }: Props) => {
         {issues.map((issue) => (
           <Table.Row key={issue.id}>
             <Table.Cell>
-              <Link href={`/issues/${issue.id}`} className="nav-link">{issue.title}</Link>
+              <Link href={`/issues/${issue.id}`} className="nav-link">
+                {issue.title}
+              </Link>
               <div className="block md:hidden">
-                <IssueStatusBadge status={issue.status} />
+                <IssueStatusBadge status={issue.status as keyof typeof Status} />
               </div>
             </Table.Cell>
             <Table.Cell className="hidden md:table-cell">
-              <IssueStatusBadge status={issue.status} />
+              <IssueStatusBadge status={issue.status as keyof typeof Status} />
             </Table.Cell>
             <Table.Cell className="hidden md:table-cell">
               {issue.createdAt.toDateString()}
@@ -65,46 +73,7 @@ const IssueTable = ({ searchParams, issues, delIssues }: Props) => {
             </Table.Cell>
           </Table.Row>
         ))}
-        {/* {searchParams.status !== "CLOSED"
-          ? issues.map((issue) => (
-              <Table.Row key={issue.id}>
-                <Table.Cell>
-                  <Link href={`/issues/${issue.id}`} className="nav-link">
-                    {issue.title}
-                  </Link>
-                  <div className="block md:hidden">
-                    <IssueStatusBadge status={issue.status} />
-                  </div>
-                </Table.Cell>
-                <Table.Cell className="hidden md:table-cell">
-                  <IssueStatusBadge status={issue.status} />
-                </Table.Cell>
-                <Table.Cell className="hidden md:table-cell">
-                  {issue.createdAt.toDateString()}
-                </Table.Cell>
-                <Table.Cell className="hidden md:table-cell">
-                  {issue.updatedAt.toDateString()}
-                </Table.Cell>
-              </Table.Row>
-            ))
-          : delIssues.map((issue) => (
-              <Table.Row key={issue.id}>
-                <Table.Cell>
-                  <Link href={`/issues/${issue.id}`} className="nav-link">
-                    {issue.title}
-                  </Link>
-                  <div className="block md:hidden">
-                    <IssueStatusBadge status={issue.status} />
-                  </div>
-                </Table.Cell>
-                <Table.Cell className="hidden md:table-cell">
-                  <IssueStatusBadge status={issue.status} />
-                </Table.Cell>
-                <Table.Cell className="hidden md:table-cell">
-                  {issue.deleteAt.toDateString()}
-                </Table.Cell>
-              </Table.Row>
-            ))} */}
+        {/* ... (unchanged code) */}
       </Table.Body>
     </Table.Root>
   );

@@ -17,7 +17,8 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => {
   const assignIssue = (userid: String) => {
     if (status === "unauthenticated")
       return toast.error("Please Login first to assign the issue");
-    try {
+   
+      try {
       axios.patch("/api/issues/" + issue.id, {
         assignedToUserId: userid || null,
       });

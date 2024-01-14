@@ -1,14 +1,14 @@
-
-import Pagination from '@/app/component/pagination';
-import prisma from '@/prisma/client';
-import { Status } from '@prisma/client';
-import IssueActions from "@/app/issues/list/IssueActions"
-import IssueTable, { IssueQuery, columnNames } from './IssueList'
-import { Flex } from '@radix-ui/themes';
-import { Metadata } from 'next';
+import Pagination from "@/app/component/pagination";
+import prisma from "@/prisma/client";
+// import { Status } from '@prisma/client';
+import IssueActions from "@/app/issues/list/IssueActions";
+import IssueTable, { IssueQuery, columnNames,Status } from "./IssueList";
+import { Flex } from "@radix-ui/themes";
+import { Metadata } from "next";
 
 interface Props {
-  searchParams: IssueQuery
+
+  searchParams: IssueQuery;
 }
 
 const IssuesPage = async ({ searchParams }: Props) => {
@@ -18,9 +18,8 @@ const IssuesPage = async ({ searchParams }: Props) => {
     : undefined;
   const where = { status };
 
-  const orderBy = columnNames
-    .includes(searchParams.orderBy)
-    ? { [searchParams.orderBy]: 'asc' }
+  const orderBy = columnNames.includes(searchParams.orderBy)
+    ? { [searchParams.orderBy]: "asc" }
     : undefined;
 
   const page = parseInt(searchParams.page) || 1;
@@ -32,19 +31,13 @@ const IssuesPage = async ({ searchParams }: Props) => {
     skip: (page - 1) * pageSize,
     take: pageSize,
   });
-  const delIssues = await prisma.del.findMany({
-    where:{status:"CLOSED"},
-    orderBy,
-    skip:(page-1)* pageSize,
-    take:pageSize,
-  })
 
   const issueCount = await prisma.issue.count({ where });
 
   return (
     <Flex direction="column" gap="3">
       <IssueActions />
-      <IssueTable searchParams={searchParams} issues={issues} delIssues={delIssues}/>
+      <IssueTable searchParams={searchParams} issues={issues} />
       <Pagination
         pageSize={pageSize}
         currentPage={page}
@@ -54,10 +47,10 @@ const IssuesPage = async ({ searchParams }: Props) => {
   );
 };
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
-  title: 'Issue Tracker - Issue List',
-  description: 'View all project issues'
+  title: "Issue Tracker - Issue List",
+  description: "View all project issues",
 };
 
 export default IssuesPage;
