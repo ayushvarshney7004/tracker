@@ -32,19 +32,13 @@ const IssuesPage = async ({ searchParams }: Props) => {
     skip: (page - 1) * pageSize,
     take: pageSize,
   });
-  const delIssues = await prisma.del.findMany({
-    where:{status:"CLOSED"},
-    orderBy,
-    skip:(page-1)* pageSize,
-    take:pageSize,
-  })
-
+  
   const issueCount = await prisma.issue.count({ where });
 
   return (
     <Flex direction="column" gap="3">
       <IssueActions />
-      <IssueTable searchParams={searchParams} issues={issues} delIssues={delIssues}/>
+      <IssueTable searchParams={searchParams} issues={issues} />
       <Pagination
         pageSize={pageSize}
         currentPage={page}
