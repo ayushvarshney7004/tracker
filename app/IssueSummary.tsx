@@ -1,7 +1,8 @@
-import { Status } from '@prisma/client';
+// import { Status } from '@prisma/client';
 import { Card, Flex, Text } from '@radix-ui/themes';
 import Link from 'next/link';
 import React from 'react';
+import { Status  as StatusType} from './issues/list/IssueList';
 
 interface Props {
   open: number;
@@ -13,15 +14,15 @@ const IssueSummary = ({ open, inProgress, closed }: Props) => {
   const containers: {
     label: string;
     value: number;
-    status: Status;
+    status: string; // Use the Status type here
   }[] = [
-    { label: 'Open Issues', value: open, status: 'OPEN' },
+    { label: 'Open Issues', value: open, status: StatusType.OPEN },
     {
       label: 'In-progress Issues',
       value: inProgress,
-      status: 'IN_PROGRESS',
+      status: StatusType.IN_PROGRESS,
     },
-    { label: 'Closed Issues', value: closed, status: 'CLOSED' },
+    { label: 'Closed Issues', value: closed, status: StatusType.CLOSED },
   ];
 
   return (
