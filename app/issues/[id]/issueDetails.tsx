@@ -4,6 +4,7 @@ import { Card, Flex, Heading, Text } from "@radix-ui/themes";
 import ReactMarkdown from "react-markdown";
 import { AiFillBackward } from "react-icons/ai";
 import Link from "next/link";
+import { Status } from "../list/IssueList";
 
 const IssueDetails = ({ issue }: { issue: Issue }) => {
   return (
@@ -13,7 +14,7 @@ const IssueDetails = ({ issue }: { issue: Issue }) => {
           <AiFillBackward />
         </Link>
         <Heading>{issue.title}</Heading>
-        <Statusbadge status={issue.status} />
+        <Statusbadge status={issue.status as keyof typeof Status} />
       </Flex>
       <Text>{issue.createdAt.toDateString()}</Text>
       <Card className="prose max-w-full" mt="4">
