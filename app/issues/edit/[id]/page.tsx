@@ -20,7 +20,7 @@ const EditIssuePage = async ({ params }: Props) => {
   const session = await getServerSession(authOptions);
   if (!session) return redirect("/");
   const issue = await prisma.issue.findUnique({
-    where: { id: parseInt(params.id) },
+    where: { id: params.id },
   });
 
   if (!issue) notFound();

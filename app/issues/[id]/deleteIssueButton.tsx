@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
-const DeleteIssueButton = ({ issueId }: { issueId: number }) => {
+const DeleteIssueButton = ({ issueId }: { issueId: string }) => {
   const [error, setError] = useState(false);
   const [isDeleting, setDeleting] = useState(false);
 

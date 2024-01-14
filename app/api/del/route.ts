@@ -9,7 +9,7 @@ export async function PATCH(req: NextRequest) {
     return NextResponse.json({ error: "Invalid user" }, { status: 405 });
   const id = await req.json();
   const closedIssue = await prisma.issue.update({
-    where: { id: parseInt(id) },
+    where: { id: id },
     data: { status: "CLOSED" },
   });
 

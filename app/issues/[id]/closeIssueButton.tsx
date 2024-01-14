@@ -3,7 +3,7 @@ import { Button } from "@radix-ui/themes";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { redirect, useRouter } from "next/navigation";
-const CloseIssueButton = ({ issueId }: { issueId: number }) => {
+const CloseIssueButton = ({ issueId }: { issueId: string }) => {
   const router = useRouter();
   const closeIssueHandler = async () => {
     try {
