@@ -7,6 +7,9 @@ import "@radix-ui/themes/styles.css";
 import AuthProvider from "./auth/provider";
 import QueryClientProvider from "./queryClientProvider";
 import { Toaster } from "react-hot-toast";
+import { Analytics } from '@vercel/analytics/react';
+import {SpeedInsights} from "@vercel/speed-insights/next";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -31,6 +34,8 @@ export default function RootLayout({
               <Navbar />
               <main className="p-5">
                 <Container>{children}</Container>
+                <SpeedInsights/>
+                <Analytics/>
               </main>
             </Theme>
           </AuthProvider>
