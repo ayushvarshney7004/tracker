@@ -1,9 +1,10 @@
 "use client";
-import { Status } from "@prisma/client";
+// import { Status } from "@prisma/client";
+import { Status } from "./IssueList";
 import { Select } from "@radix-ui/themes";
 import React from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-const statusUse: { label: String; value?: Status }[] = [
+const statusUse: { label: String; value?:keyof typeof Status }[] = [
   { label: "All" },
   {
     label: "Open",
