@@ -4,7 +4,7 @@ import { Table } from "@radix-ui/themes";
 import Link from "next/link";
 import React from "react";
 import NextLink from "next/link";
-import { Del, Issue, Status } from "@prisma/client";
+import {  Issue, Status } from "@prisma/client";
 
 export interface IssueQuery {
   status: Status;
@@ -15,10 +15,10 @@ export interface IssueQuery {
 interface Props {
   searchParams: IssueQuery;
   issues: Issue[];
-  delIssues: Del[];
+
 }
 
-const IssueTable = ({ searchParams, issues, delIssues }: Props) => {
+const IssueTable = ({ searchParams, issues }: Props) => {
   return (
     <Table.Root variant="surface">
       <Table.Header>
