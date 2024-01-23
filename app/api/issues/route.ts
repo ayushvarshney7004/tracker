@@ -5,7 +5,7 @@ import { getServerSession } from "next-auth";
 import authOptions from "@/app/auth/authoptions";
 
 export async function POST(req: NextRequest) {
-  const session = getServerSession(authOptions);
+  const session = await getServerSession(authOptions);
 
   if (!session)
     return NextResponse.json(
@@ -21,4 +21,10 @@ export async function POST(req: NextRequest) {
     data: { title: body.title, description: body.description },
   });
   return NextResponse.json(newIssue, { status: 201 });
+}
+
+export async function GET(req: NextRequest) {
+  const issues = await prisma.issue.findMany({ orderBy: { id: "asc" } });
+
+  return NextResponse.json(issues, { status: 200 });
 }

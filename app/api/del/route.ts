@@ -4,7 +4,7 @@ import { getServerSession } from "next-auth";
 import authOptions from "@/app/auth/authoptions";
 
 export async function PATCH(req: NextRequest) {
-  const session = getServerSession(authOptions);
+  const session = await getServerSession(authOptions);
   if (!session)
     return NextResponse.json({ error: "Invalid user" }, { status: 405 });
   const { id } = await req.json();
@@ -27,4 +27,15 @@ export async function PATCH(req: NextRequest) {
   });
 
   return NextResponse.json(closedIssue, { status: 200 });
+}
+export async function POST(req: NextRequest) {
+  const session = await getServerSession(authOptions);
+  if (!session)
+    return NextResponse.json({ error: "Invalid user" }, { status: 405 });
+  const { id } = await req.json();
+
+  const assigneeIssue = await prisma.issue.findFirst({
+    where: { assignedToUserId: id },
+  });
+  return NextResponse.json(assigneeIssue, { status: 200 });
 }
