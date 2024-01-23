@@ -63,6 +63,7 @@ export default function Board() {
 
   return (
     <div className="items-center  h-[35rem] space-y-2 w-full">
+      <meta name="Issue-Tracker - Board" content="board to filter issue accordingly users and status"/>
       <div className="flex w-full sm:space-x-[32rem] md:space-x-[32rem] lg:space-x-[58rem] items-center  ">
         <div className="flex flex-col w-fit  justify-start">
           <Text> User Filter</Text>
@@ -99,7 +100,3 @@ export default function Board() {
   );
 }
 
-export const metadata: Metadata = {
-  title: "Issue Tracker - Board",
-  description: "Issue Tracker - Board",
-};
