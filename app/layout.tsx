@@ -7,6 +7,7 @@ import "@radix-ui/themes/styles.css";
 import AuthProvider from "./auth/provider";
 import QueryClientProvider from "./queryClientProvider";
 import { Toaster } from "react-hot-toast";
+import { DndContextProvider } from "@/context/dndContextProvider";
 import { Analytics } from '@vercel/analytics/react';
 import {SpeedInsights} from "@vercel/speed-insights/next";
 
@@ -31,12 +32,16 @@ export default function RootLayout({
           <AuthProvider>
             <Toaster/>
             <Theme accentColor="green" appearance="light">
+            
+
+              
               <Navbar />
               <main className="p-5">
                 <Container>{children}</Container>
                 <SpeedInsights/>
                 <Analytics/>
               </main>
+           
             </Theme>
           </AuthProvider>
         </QueryClientProvider>

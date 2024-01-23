@@ -5,7 +5,8 @@ import { usePathname } from "next/navigation";
 import React from "react";
 import { AiFillBug } from "react-icons/ai";
 import classnames from "classnames";
-import { signIn, useSession  } from "next-auth/react";
+
+import { signIn, useSession } from "next-auth/react";
 
 import Skeleton from "react-loading-skeleton";
 import {
@@ -20,6 +21,8 @@ import {
 const NavBar = () => {
   return (
     <nav className="border-b mb-5 px-5 py-3">
+
+      
       <Container>
         <Flex justify="between">
           <Flex align="center" gap="3">
@@ -31,6 +34,7 @@ const NavBar = () => {
           <AuthStatus />
         </Flex>
       </Container>
+    
     </nav>
   );
 };
@@ -41,39 +45,50 @@ const NavLinks = () => {
   const links = [
     { label: "Dashboard", href: "/" },
     { label: "Issues", href: "/issues/list" },
+    { label: "Board", href: "/board" },
   ];
 
   return (
     <ul className="flex space-x-6">
-      {links.map((link) => (
-        <li key={link.href}>
-          <Link
-            className={classnames({
-              "nav-link": true,
-              "!text-zinc-900": link.href === currentPath,
-            })}
-            href={link.href}
-          >
-            {link.label}
-          </Link>
-        </li>
-      ))}
+     
+        {links.map((link) => (
+          <li key={link.href}>
+            <Link
+              className={classnames({
+                "nav-link": true,
+                "!text-zinc-900": link.href === currentPath,
+                "md:block lg:block sm: hidden":link.href === "/board",
+                // "md:block lg:block": link.href === "/board",
+              })}
+              href={link.href}
+            >
+              {link.label}
+            </Link>
+          </li>
+        ))}
+
     </ul>
   );
 };
 
 const AuthStatus = () => {
   const { status, data } = useSession();
-  
 
-
-  if (status === "loading") return <Skeleton width="3rem"/>;
+  if (status === "loading") return <Skeleton width="3rem" />;
 
   if (status === "unauthenticated")
-    return <Link className="nav-link" href="#" onClick={()=>{
-      console.log('clicking')
-      signIn('google',{callbackUrl:"/"})
-    }}>Login</Link>;
+    return (
+      <Link
+        className="nav-link"
+        href="#"
+        onClick={() => {
+          console.log("clicking");
+          signIn("google", { callbackUrl: "/" });
+        }}
+      >
+        Login
+      </Link>
+    );
 
   return (
     <Box>
@@ -87,7 +102,6 @@ const AuthStatus = () => {
             className="cursor-pointer"
             referrerPolicy="no-referrer"
           />
-    
         </DropdownMenu.Trigger>
         <DropdownMenu.Content>
           <DropdownMenu.Label>
