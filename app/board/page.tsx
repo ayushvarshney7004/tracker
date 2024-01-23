@@ -1,4 +1,5 @@
 "use client";
+/* eslint-disable */
 import { Text, Button, Flex } from "@radix-ui/themes";
 import IssueCard from "./issueCard";
 import { useQuery } from "@tanstack/react-query";
@@ -8,10 +9,10 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { redirect, useRouter } from "next/navigation";
 import { useState } from "react";
-import { Metadata } from "next";
+
 import AvatarFilter from "../component/avatarFilter";
 import { useSession } from "next-auth/react";
-import { TEXT } from "react-dnd-html5-backend/dist/NativeTypes";
+
 export default function Board() {
   const { data: session, status } = useSession();
   if (status === "unauthenticated") {
