@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import React from "react";
 import { AiFillBug } from "react-icons/ai";
 import classnames from "classnames";
-
+import { useTheme } from "next-themes";
 import { signIn, useSession } from "next-auth/react";
 
 import Skeleton from "react-loading-skeleton";
@@ -18,11 +18,11 @@ import {
   Text,
 } from "@radix-ui/themes";
 
+import ThemeSwitch from "./component/themeSwitch";
+
 const NavBar = () => {
   return (
     <nav className="border-b mb-5 px-5 py-3">
-
-      
       <Container>
         <Flex justify="between">
           <Flex align="center" gap="3">
@@ -31,16 +31,21 @@ const NavBar = () => {
             </Link>
             <NavLinks />
           </Flex>
-          <AuthStatus />
+          <div className="flex space-x-4">
+            <AuthStatus />
+            <ThemeSwitch />
+          </div>
         </Flex>
       </Container>
-    
     </nav>
   );
 };
 
 const NavLinks = () => {
   const currentPath = usePathname();
+  const { theme } = useTheme();
+
+  const mode = theme;
 
   const links = [
     { label: "Dashboard", href: "/" },
@@ -50,23 +55,20 @@ const NavLinks = () => {
 
   return (
     <ul className="flex space-x-6">
-     
-        {links.map((link) => (
-          <li key={link.href}>
-            <Link
-              className={classnames({
-                "nav-link": true,
-                "!text-zinc-900": link.href === currentPath,
-                "md:block lg:block sm: hidden":link.href === "/board",
-                // "md:block lg:block": link.href === "/board",
-              })}
-              href={link.href}
-            >
-              {link.label}
-            </Link>
-          </li>
-        ))}
-
+      {links.map((link) => (
+        <li key={link.href}>
+          <Link
+            className={classnames({
+              "nav-link": true,
+              "md:block lg:block sm: hidden": link.href === "/board",
+              underline: link.href === currentPath,
+            })}
+            href={link.href}
+          >
+            {link.label}
+          </Link>
+        </li>
+      ))}
     </ul>
   );
 };
